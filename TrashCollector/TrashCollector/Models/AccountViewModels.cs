@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TrashCollector.Models
@@ -79,6 +80,11 @@ namespace TrashCollector.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Role")]
+        public string RoleViewModel { get; set; }
+
+        public IEnumerable<IdentityRole> AspNetRoles { get; set; }
     }
 
     public class ResetPasswordViewModel

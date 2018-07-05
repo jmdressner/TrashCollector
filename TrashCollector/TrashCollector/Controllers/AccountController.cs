@@ -5,7 +5,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TrashCollector.Models;
@@ -139,7 +141,16 @@ namespace TrashCollector.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            // get roles table
+            var roles = db.Roles.ToList();
+            RegisterViewModel rvm = new RegisterViewModel()
+            {
+                AspNetRoles = roles
+            };
+            // rvm.AspNetRoles = // get list of roles from roles table
+            return View(rvm);
         }
 
         //
@@ -149,25 +160,54 @@ namespace TrashCollector.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            using (var context = new ApplicationDbContext())
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                var user = new ApplicationUser { Email = model.Email, UserName = model.Email, RoleViewModel = model.RoleViewModel };
+                    //  var result = await UserManager.CreateAsync(user, model.Password);
+                    var result = UserManager.Create(user, model.Password);
 
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
+                   //  var currentUserId = User.Identity.GetUserId();
+
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                    if (model.RoleViewModel == "Customer")
+                    {
+                        userManager.AddToRole(user.Id, "Customer");
+
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToAction("Index", "Customers");
+                        }
+                        else
+                        {
+                            AddErrors(result);
+                        }
+                    }
+                    else if (model.RoleViewModel == "Employee")
+                    {
+                        userManager.AddToRole(user.Id, "Employee");
+
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToAction("Index", "Employees");
+                        }
+                        else
+                        {
+                            AddErrors(result);
+                        }
+                    }
+                    else
+                    {
+                        return View(model);
+                    }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
