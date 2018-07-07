@@ -17,7 +17,7 @@ namespace TrashCollector.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var customers = db.Customers.Include(c => c.Zipcode);
+            var customers = db.Customers.Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
             return View(customers.ToList());
         }
 
@@ -39,6 +39,8 @@ namespace TrashCollector.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
+            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra");
+            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day");
             ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip");
             return View();
         }
@@ -48,7 +50,7 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Email,Address,ZipcodeID")] Customer customer)
+        public ActionResult Create([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -57,6 +59,8 @@ namespace TrashCollector.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
+            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
             ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
             return View(customer);
         }
@@ -73,6 +77,8 @@ namespace TrashCollector.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
+            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
             ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
             return View(customer);
         }
@@ -82,7 +88,7 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Email,Address,ZipcodeID")] Customer customer)
+        public ActionResult Edit([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +96,8 @@ namespace TrashCollector.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
+            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
             ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
             return View(customer);
         }

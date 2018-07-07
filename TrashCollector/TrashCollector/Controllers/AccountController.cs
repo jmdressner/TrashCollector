@@ -182,7 +182,7 @@ namespace TrashCollector.Controllers
                         if (result.Succeeded)
                         {
                             await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            return RedirectToAction("Index", "Customers");
+                            return RedirectToAction("Create", "Customers");
                         }
                         else
                         {
@@ -196,7 +196,7 @@ namespace TrashCollector.Controllers
                         if (result.Succeeded)
                         {
                             await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            return RedirectToAction("Index", "Employees");
+                            return RedirectToAction("Create", "Employees");
                         }
                         else
                         {

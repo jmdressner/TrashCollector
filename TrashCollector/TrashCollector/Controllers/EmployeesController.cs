@@ -17,7 +17,8 @@ namespace TrashCollector.Controllers
         // GET: Employees
         public ActionResult Index()
         {
-            return View(db.Employees.ToList());
+            var employees = db.Employees.Include(e => e.Zipcode);
+            return View(employees.ToList());
         }
 
         // GET: Employees/Details/5
@@ -38,6 +39,7 @@ namespace TrashCollector.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
+            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip");
             return View();
         }
 
@@ -46,7 +48,7 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Email")] Employee employee)
+        public ActionResult Create([Bind(Include = "ID,Name,Email,ZipcodeID")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +57,7 @@ namespace TrashCollector.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", employee.ZipcodeID);
             return View(employee);
         }
 
@@ -70,6 +73,7 @@ namespace TrashCollector.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", employee.ZipcodeID);
             return View(employee);
         }
 
@@ -78,7 +82,7 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Email")] Employee employee)
+        public ActionResult Edit([Bind(Include = "ID,Name,Email,ZipcodeID")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +90,7 @@ namespace TrashCollector.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", employee.ZipcodeID);
             return View(employee);
         }
 

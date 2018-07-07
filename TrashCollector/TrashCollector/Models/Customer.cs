@@ -19,5 +19,17 @@ namespace TrashCollector.Models
         public int ZipcodeID { get; set; }
         public Zipcode Zipcode { get; set; }
 
+        [ForeignKey("TrashDay")]
+        [Display(Name = "Trash Pick Up Day")]
+        public int TrashDayID { get; set; }
+        public TrashDay TrashDay { get; set; }
+
+        public bool PickUpStatus { get; set; }
+
+        [ForeignKey("ExtraDay")]
+        [Display(Name = "Extra Pick Up")]
+        public int ExtraID { get; set; }
+        public ExtraDay ExtraDay { get; set; }
+
     }
 }
