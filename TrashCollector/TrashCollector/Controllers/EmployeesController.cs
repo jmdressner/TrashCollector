@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -24,11 +25,12 @@ namespace TrashCollector.Controllers
         // GET: Employees/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            var currentUserId = User.Identity.GetUserId();
+            if (currentUserId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
+            Employee employee = db.Employees.Where(e => e.ApplicationUserID == currentUserId).Include(e => e.Zipcode).FirstOrDefault();
             if (employee == null)
             {
                 return HttpNotFound();
@@ -50,6 +52,8 @@ namespace TrashCollector.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,Email,ZipcodeID")] Employee employee)
         {
+            var currentUserId = User.Identity.GetUserId();
+            employee.ApplicationUserID = currentUserId;
             if (ModelState.IsValid)
             {
                 db.Employees.Add(employee);

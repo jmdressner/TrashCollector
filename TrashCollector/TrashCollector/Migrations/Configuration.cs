@@ -61,17 +61,7 @@ namespace TrashCollector.Migrations
                 );
             context.SaveChanges();
 
-            context.Customers.AddOrUpdate(
-                c => c.Name,
-                    new Customer { Name = "Emily Dreyer", Email = "c@gmail.com", Address = "7128 W Harrison Ave", ZipcodeID = 2, TrashDayID = 2, PickUpStatus = false, ExtraID = 8 },
-                    new Customer { Name = "Jacob Davies", Email = "d@gmail.com", Address = "2608 S 71st St", ZipcodeID = 2, TrashDayID = 3, PickUpStatus = false, ExtraID = 8 },
-                    new Customer { Name = "Alex Lenard", Email = "e@gmail.com", Address = "2476 S 15th St", ZipcodeID = 1, TrashDayID = 3, PickUpStatus = false, ExtraID = 8 },
-                    new Customer { Name = "Jennifer Rex", Email = "f@gmail.com", Address = "2443 S 13th St", ZipcodeID = 1, TrashDayID = 4, PickUpStatus = false, ExtraID = 8 },
-                    new Customer { Name = "Melody Morris", Email = "g@gmail.com", Address = "2467 S 10th St", ZipcodeID = 1, TrashDayID = 4, PickUpStatus = false, ExtraID = 8 },
-                    new Customer { Name = "Karolin Tobin", Email = "h@gmail.com", Address = "2508 S 10th St", ZipcodeID = 1, TrashDayID = 5, PickUpStatus = false, ExtraID = 8 },
-                    new Customer { Name = "Rebecca Hill", Email = "i@gmail.com", Address = "2436 S 8th St", ZipcodeID = 1, TrashDayID = 5, PickUpStatus = false, ExtraID = 8 }
-                );
-            context.SaveChanges();
+                  
         }
     }
 }

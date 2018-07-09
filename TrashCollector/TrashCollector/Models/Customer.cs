@@ -31,5 +31,8 @@ namespace TrashCollector.Models
         public int ExtraID { get; set; }
         public ExtraDay ExtraDay { get; set; }
 
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationUserID { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

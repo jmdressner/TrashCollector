@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,18 +18,20 @@ namespace TrashCollector.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var customers = db.Customers.Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
+            var currentUserId = User.Identity.GetUserId();
+            var customers = db.Customers.Where(c => c.ApplicationUserID == currentUserId).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
             return View(customers.ToList());
         }
 
         // GET: Customers/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details()
         {
-            if (id == null)
+            var currentUserId = User.Identity.GetUserId();
+            if (currentUserId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
+            Customer customer = db.Customers.Where(e => e.ApplicationUserID == currentUserId).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode).FirstOrDefault();
             if (customer == null)
             {
                 return HttpNotFound();
@@ -52,6 +55,8 @@ namespace TrashCollector.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID")] Customer customer)
         {
+            var currentUserId = User.Identity.GetUserId();
+            customer.ApplicationUserID = currentUserId;
             if (ModelState.IsValid)
             {
                 db.Customers.Add(customer);
@@ -88,7 +93,7 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID")] Customer customer)
+        public ActionResult Edit([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID,ApplicationUserID")] Customer customer)
         {
             if (ModelState.IsValid)
             {
