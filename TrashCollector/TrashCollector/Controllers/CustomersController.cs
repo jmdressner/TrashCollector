@@ -61,7 +61,7 @@ namespace TrashCollector.Controllers
             {
                 db.Customers.Add(customer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
@@ -71,7 +71,7 @@ namespace TrashCollector.Controllers
         }
 
         // GET: Customers/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult EditProfile(int? id)
         {
             if (id == null)
             {
@@ -93,7 +93,44 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID,ApplicationUserID")] Customer customer)
+        public ActionResult EditProfile([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID,ApplicationUserID")] Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(customer).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Details");
+            }
+            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
+            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
+            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
+            return View(customer);
+        }
+
+        // GET: Customers/Edit/5
+        public ActionResult EditSchedule(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
+            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
+            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
+            return View(customer);
+        }
+
+        // POST: Customers/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSchedule([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID,ApplicationUserID")] Customer customer)
         {
             if (ModelState.IsValid)
             {
