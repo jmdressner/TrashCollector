@@ -304,6 +304,8 @@
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Employees\WorkSchedule.cshtml" />
+    <Content Include="Views\Employees\CreateSchedule.cshtml" />
+    <Content Include="Views\Employees\EditStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -128,5 +128,70 @@ namespace TrashCollector.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpGet]
+        public ActionResult CreateSchedule()
+        {
+            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day");
+            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip");
+            return View();
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateSchedule(int? ZipcodeID, int? TrashDayID)
+        {
+            if (ZipcodeID == null || TrashDayID == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var foundCustomers = db.Customers.Where(c => c.ZipcodeID == ZipcodeID && c.TrashDayID == TrashDayID).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
+
+            if (foundCustomers == null)
+            {
+                return HttpNotFound();
+            }
+            return View("WorkSchedule", foundCustomers.ToList());
+        }
+
+        public ActionResult EditStatus(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
+            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
+            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditStatus([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID")] Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                var newStatus = db.Customers.Single(s => s.ID == customer.ID);
+                newStatus.PickUpStatus = customer.PickUpStatus;
+                db.SaveChanges();
+                return RedirectToAction("WorkSchedule");
+            }
+            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
+            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
+            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
+            return View(customer);
+        }
+        
+        public ActionResult WorkSchedule()
+        {
+            var customers = db.Customers.Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
+            return View(customers.ToList());
+        }
     }
 }
