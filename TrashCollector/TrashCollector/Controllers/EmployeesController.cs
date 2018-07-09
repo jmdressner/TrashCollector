@@ -50,7 +50,7 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Email,ZipcodeID")] Employee employee)
+        public ActionResult Create([Bind(Include = "ID,Name,Email,ZipcodeID,ApplicationUserID")] Employee employee)
         {
             var currentUserId = User.Identity.GetUserId();
             employee.ApplicationUserID = currentUserId;
@@ -58,7 +58,7 @@ namespace TrashCollector.Controllers
             {
                 db.Employees.Add(employee);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", employee.ZipcodeID);
@@ -86,13 +86,13 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Email,ZipcodeID")] Employee employee)
+        public ActionResult Edit([Bind(Include = "ID,Name,Email,ZipcodeID,ApplicationUserID")] Employee employee)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", employee.ZipcodeID);
             return View(employee);
@@ -138,18 +138,19 @@ namespace TrashCollector.Controllers
         {
             ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day");
             ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip");
+            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra");
             return View();
         }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSchedule(int? ZipcodeID, int? TrashDayID)
+        public ActionResult CreateSchedule(int? ZipcodeID, int? TrashDayID, int? ExtraID)
         {
-            if (ZipcodeID == null || TrashDayID == null)
+            if (ZipcodeID == null || TrashDayID == null || ExtraID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var foundCustomers = db.Customers.Where(c => c.ZipcodeID == ZipcodeID && c.TrashDayID == TrashDayID).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
+            var foundCustomers = db.Customers.Where(c => c.ZipcodeID == ZipcodeID && c.TrashDayID == TrashDayID || c.ZipcodeID == ZipcodeID  && c.ExtraID == ExtraID).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
 
             if (foundCustomers == null)
             {
