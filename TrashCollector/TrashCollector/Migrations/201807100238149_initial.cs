@@ -3,7 +3,7 @@ namespace TrashCollector.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMigration : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -17,9 +17,9 @@ namespace TrashCollector.Migrations
                         Address = c.String(),
                         ZipcodeID = c.Int(nullable: false),
                         TrashDayID = c.Int(nullable: false),
-                        PickUpStatus = c.Boolean(nullable: false),
                         ExtraID = c.Int(nullable: false),
                         ApplicationUserID = c.String(maxLength: 128),
+                        Balance = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserID)

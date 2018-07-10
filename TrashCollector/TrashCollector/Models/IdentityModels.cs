@@ -47,5 +47,7 @@ namespace TrashCollector.Models
         public System.Data.Entity.DbSet<TrashCollector.Models.TrashDay> TrashDays { get; set; }
 
         public System.Data.Entity.DbSet<TrashCollector.Models.ExtraDay> ExtraDays { get; set; }
+
+        public System.Data.Entity.DbSet<TrashCollector.Models.PickUpModel> PickUpModels { get; set; }
     }
 }

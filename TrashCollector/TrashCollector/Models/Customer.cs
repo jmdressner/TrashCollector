@@ -24,8 +24,6 @@ namespace TrashCollector.Models
         public int TrashDayID { get; set; }
         public TrashDay TrashDay { get; set; }
 
-        public bool PickUpStatus { get; set; }
-
         [ForeignKey("ExtraDay")]
         [Display(Name = "Extra Pick Up")]
         public int ExtraID { get; set; }
@@ -36,5 +34,7 @@ namespace TrashCollector.Models
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserID { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+
+        public int Balance { get; set; }
     }
 }

@@ -21,7 +21,6 @@ namespace TrashCollector.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
 
-            //ApplicationDbContext db = new ApplicationDbContext();
             context.Roles.AddOrUpdate(
                 s => s.Name,
                     new IdentityRole { Name = "Customer" },
@@ -61,8 +60,6 @@ namespace TrashCollector.Migrations
                     new ExtraDay { extra = "None" }
                 );
             context.SaveChanges();
-
-
         }
     }
 }

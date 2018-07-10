@@ -150,7 +150,14 @@ namespace TrashCollector.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var foundCustomers = db.Customers.Where(c => c.ZipcodeID == ZipcodeID && c.TrashDayID == TrashDayID || c.ZipcodeID == ZipcodeID  && c.ExtraID == ExtraID).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
+            List<PickUpModel> pickupList = new List<PickUpModel>();
+
+            // foreach problem?? on pickup list use .includeCustomer
+            pickupList[0].Customer = db.Customers.Where(c => pickupList[0].CustomerID == c.ID).FirstOrDefault();
+
+
 
             if (foundCustomers == null)
             {
@@ -183,7 +190,7 @@ namespace TrashCollector.Controllers
             if (ModelState.IsValid)
             {
                 var newStatus = db.Customers.Single(s => s.ID == customer.ID);
-                newStatus.PickUpStatus = customer.PickUpStatus;
+                //newStatus.PickUpStatus = customer.PickUpStatus;
                 db.SaveChanges();
                 return RedirectToAction("WorkSchedule");
             }

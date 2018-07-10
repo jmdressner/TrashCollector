@@ -23,6 +23,13 @@ namespace TrashCollector.Controllers
             return View(customers.ToList());
         }
 
+        public ActionResult Balance()
+        {
+            var currentUserId = User.Identity.GetUserId();
+            var customers = db.Customers.Where(c => c.ApplicationUserID == currentUserId).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
+            return View(customers.ToList());
+        }
+
         // GET: Customers/Details/5
         public ActionResult Details()
         {
