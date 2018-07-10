@@ -60,7 +60,7 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID")] Customer customer)
+        public ActionResult Create([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,ExtraID,ApplicationUserID,Balance")] Customer customer)
         {
             var currentUserId = User.Identity.GetUserId();
             customer.ApplicationUserID = currentUserId;
@@ -100,7 +100,7 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID,ApplicationUserID")] Customer customer)
+        public ActionResult EditProfile([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,ExtraID,ApplicationUserID,Balance")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -137,7 +137,7 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditSchedule([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID,ApplicationUserID")] Customer customer)
+        public ActionResult EditSchedule([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,ExtraID,ApplicationUserID,Balance")] Customer customer)
         {
             if (ModelState.IsValid)
             {
