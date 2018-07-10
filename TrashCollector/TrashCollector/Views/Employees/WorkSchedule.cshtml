@@ -12,16 +12,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.TrashDay.Day)
+            @Html.DisplayNameFor(model => model.Customer.TrashDay.Day)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ExtraDay.extra)
+            @Html.DisplayNameFor(model => model.Customer.ExtraDay.extra)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Address)
+            @Html.DisplayNameFor(model => model.Customer.Address)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Zipcode.Zip)
+            @Html.DisplayNameFor(model => model.Customer.Zipcode.Zip)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PickUpStatus)
@@ -32,16 +32,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.TrashDay.Day)
+            @Html.DisplayFor(modelItem => item.Customer.TrashDay.Day)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ExtraDay.extra)
+            @Html.DisplayFor(modelItem => item.Customer.ExtraDay.extra)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Address)
+            @Html.DisplayFor(modelItem => item.Customer.Address)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Zipcode.Zip)
+            @Html.DisplayFor(modelItem => item.Customer.Zipcode.Zip)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PickUpStatus)

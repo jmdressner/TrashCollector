@@ -151,19 +151,14 @@ namespace TrashCollector.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var foundCustomers = db.Customers.Where(c => c.ZipcodeID == ZipcodeID && c.TrashDayID == TrashDayID || c.ZipcodeID == ZipcodeID  && c.ExtraID == ExtraID).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
-            List<PickUpModel> pickupList = new List<PickUpModel>();
+            var foundCustomers = db.Customers.Where(c => c.ZipcodeID == ZipcodeID && c.TrashDayID == TrashDayID || c.ZipcodeID == ZipcodeID  && c.ExtraID == ExtraID).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode).ToList();
+            var foundPickups = db.PickUpModels.Include(p => p.Customer).Where(p => p.Customer.ZipcodeID == ZipcodeID && p.Customer.ExtraID == ExtraID || p.Customer.ZipcodeID == ZipcodeID && p.Customer.TrashDayID == TrashDayID).ToList();
 
-            // foreach problem?? on pickup list use .includeCustomer
-            pickupList[0].Customer = db.Customers.Where(c => pickupList[0].CustomerID == c.ID).FirstOrDefault();
-
-
-
-            if (foundCustomers == null)
+            if (foundPickups == null)
             {
                 return HttpNotFound();
             }
-            return View("WorkSchedule", foundCustomers.ToList());
+            return View("WorkSchedule", foundPickups);
         }
 
         public ActionResult EditStatus(int? id)
@@ -172,32 +167,42 @@ namespace TrashCollector.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
+            //Customer customer = db.Customers.Find(id);
+            var customer = db.PickUpModels.Where(e => e.Customer.ID == id).FirstOrDefault();
             if (customer == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
-            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
-            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
+            //ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
+            //ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
+            //ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
             return View(customer);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditStatus([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,PickUpStatus,ExtraID")] Customer customer)
+        public ActionResult EditStatus([Bind(Include = "ID,CustomerID,Price,PickUpStatus")] PickUpModel pickUpModel)
         {
             if (ModelState.IsValid)
             {
-                var newStatus = db.Customers.Single(s => s.ID == customer.ID);
-                //newStatus.PickUpStatus = customer.PickUpStatus;
+                db.Entry(pickUpModel).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("WorkSchedule");
+                
+                return RedirectToAction("EditBalance", pickUpModel);
             }
-            ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
-            ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
-            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
-            return View(customer);
+            return View(pickUpModel);
+        }
+
+        public ActionResult EditBalance([Bind(Include = "ID,Name,Email,Address,ZipcodeID,TrashDayID,ExtraID,ApplicationUserID,Balance")] Customer customer, PickUpModel pickUpModel)
+        {
+            if(pickUpModel.PickUpStatus == true)
+            {
+                var billCustomer = db.Customers.Where(b => b.ID == pickUpModel.CustomerID).FirstOrDefault();
+                billCustomer.Balance += pickUpModel.Price;
+                db.SaveChanges();
+                return RedirectToAction("CreateSchedule");
+            }
+            return View(pickUpModel);
         }
         
         public ActionResult WorkSchedule()

@@ -38,7 +38,7 @@ namespace TrashCollector.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Where(e => e.ApplicationUserID == currentUserId).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode).FirstOrDefault();
+            Customer customer = db.Customers.Where(c => c.ApplicationUserID == currentUserId).Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode).FirstOrDefault();
             if (customer == null)
             {
                 return HttpNotFound();
