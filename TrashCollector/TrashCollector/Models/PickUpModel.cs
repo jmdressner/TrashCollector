@@ -19,7 +19,8 @@ namespace TrashCollector.Models
         public int Price { get; set; }
 
         public bool PickUpStatus { get; set; }
-        
-        
+
+        public bool ExtraPickUpStatus { get; set; }
+
     }
 }

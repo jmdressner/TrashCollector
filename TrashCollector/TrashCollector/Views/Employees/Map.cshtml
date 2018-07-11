@@ -1,0 +1,43 @@
+﻿@model TrashCollector.Models.Customer
+
+@{
+    ViewBag.Title = "Map";
+}
+
+<style>
+    /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+    #map {
+        height: 400px;
+        width: 700px;
+    }
+</style>
+<body>
+    <center><h3>Milwaukee WI</h3></center>
+    <br />
+    <div class="row">
+        <center><div id="map"></div></center>
+        <script>
+            var map;
+
+            //var geocoder = new Geocoder(AIzaSyDQnNTtPkc5Zztdqlg18DT - 3wjGF1w0t2k);
+
+            //function GetLatAndLong() {
+            //    var customer = db.Customers.Where(n => n.ID == id).FirstOrDefault();
+            //    var normalAddress = customer.Address;
+            //    var mapAddress = geocoder.Geocode(normalAddress);
+            //}
+
+            function initMap() {
+                var pickup = { lat: 43.038902, lng: -87.906471 };
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: pickup,
+                    zoom: 13
+                });
+                var marker = new google.maps.Marker({ position: pickup, map: map });
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQnNTtPkc5Zztdqlg18DT-3wjGF1w0t2k&callback=initMap"
+                async defer></script>
+    </div>
+</body>

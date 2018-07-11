@@ -204,13 +204,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807100238149_initial.cs" />
-    <Compile Include="Migrations\201807100238149_initial.Designer.cs">
-      <DependentUpon>201807100238149_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807100246350_adding pickup table.cs" />
-    <Compile Include="Migrations\201807100246350_adding pickup table.Designer.cs">
-      <DependentUpon>201807100246350_adding pickup table.cs</DependentUpon>
+    <Compile Include="Migrations\201807102210516_initial.cs" />
+    <Compile Include="Migrations\201807102210516_initial.Designer.cs">
+      <DependentUpon>201807102210516_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -313,6 +309,7 @@
     <Content Include="Views\Customers\EditSchedule.cshtml" />
     <Content Include="Views\Customers\Balance.cshtml" />
     <Content Include="Views\Employees\EditStatus.cshtml" />
+    <Content Include="Views\Employees\Map.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -331,11 +328,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807100238149_initial.resx">
-      <DependentUpon>201807100238149_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807100246350_adding pickup table.resx">
-      <DependentUpon>201807100246350_adding pickup table.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807102210516_initial.resx">
+      <DependentUpon>201807102210516_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -17,15 +17,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ZipcodeID, "ZipcodeID", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ZipcodeID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ZipcodeID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.TrashDayID, "TrashDayID", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.TrashDayID, "Trash Pickup Day", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownList("TrashDayID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.TrashDayID, "", new { @class = "text-danger" })
@@ -33,7 +25,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ExtraID, "ExtraID", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.ExtraID, "Extra Pickup Day", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownList("ExtraID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ExtraID, "", new { @class = "text-danger" })
