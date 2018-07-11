@@ -4,9 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Trash Pickup Schedule</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <br />
 </p>
 <table class="table">
     <tr>
@@ -16,22 +16,6 @@
         <th>
             @Html.DisplayNameFor(model => model.TrashDay.Day)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Zipcode.Zip)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.Balance)
-        </th>*@
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -43,21 +27,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TrashDay.Day)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Zipcode.Zip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>*@
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Balance)
-            </td>*@
             <td>
                 @Html.ActionLink("Edit", "EditSchedule", new { id = item.ID }) |
             </td>

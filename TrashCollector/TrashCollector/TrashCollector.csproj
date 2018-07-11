@@ -232,10 +232,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\Garbage-Man-1.jpg" />
-    <Content Include="Images\Garbage-Man-2.jpg" />
-    <Content Include="Images\Garbage-Man-3.jpg" />
-    <Content Include="Images\Garbage-Man-4.png" />
     <Content Include="Images\Garbage-Man-5.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

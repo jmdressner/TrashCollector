@@ -170,15 +170,11 @@ namespace TrashCollector.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Customer customer = db.Customers.Find(id);
             var customer = db.PickUpModels.Where(e => e.Customer.ID == id).FirstOrDefault();
             if (customer == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
-            //ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
-            //ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
             return View(customer);
         }
 
@@ -218,9 +214,7 @@ namespace TrashCollector.Controllers
         {
             //var customer = db.Customers.Where(n => n.ID == id).FirstOrDefault();
             //var normalAddress = customer.Address;
-            //var geocoder = new Geocoder("AIzaSyDQnNTtPkc5Zztdqlg18DT - 3wjGF1w0t2k");
-            //var mapAddress = geocoder.Geocode(normalAddress);
-           
+
             return View();
         }
     }
