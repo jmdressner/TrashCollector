@@ -5,7 +5,9 @@
 }
 
 <h2>Balance</h2>
-
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
@@ -19,6 +21,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Balance)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditSchedule", new { id = item.ID }) |
             </td>
         </tr>
     }

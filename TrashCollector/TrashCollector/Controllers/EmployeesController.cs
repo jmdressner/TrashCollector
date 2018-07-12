@@ -137,19 +137,16 @@ namespace TrashCollector.Controllers
         public ActionResult CreateSchedule()
         {
             ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day");
+            ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip");
             ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra");
             return View();
         }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSchedule(int? TrashDayID, int? ExtraID)
+        public ActionResult CreateSchedule(int? ZipcodeID, int? TrashDayID, int? ExtraID)
         {
-            var currentUserId = User.Identity.GetUserId();
-            Employee employee = db.Employees.Where(e => e.ApplicationUserID == currentUserId).Include(e => e.Zipcode).FirstOrDefault();
-            var ZipcodeID = employee.ZipcodeID;
-
-            if (TrashDayID == null || ExtraID == null)
+            if (ZipcodeID == null || TrashDayID == null || ExtraID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -170,17 +167,21 @@ namespace TrashCollector.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //Customer customer = db.Customers.Find(id);
             var customer = db.PickUpModels.Where(e => e.Customer.ID == id).FirstOrDefault();
             if (customer == null)
             {
                 return HttpNotFound();
             }
+            //ViewBag.ExtraID = new SelectList(db.ExtraDays, "ID", "extra", customer.ExtraID);
+            //ViewBag.TrashDayID = new SelectList(db.TrashDays, "ID", "Day", customer.TrashDayID);
+            //ViewBag.ZipcodeID = new SelectList(db.Zipcodes, "ID", "Zip", customer.ZipcodeID);
             return View(customer);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditStatus([Bind(Include = "ID,CustomerID,Price,PickUpStatus,ExtraPickUpStatus")] PickUpModel pickUpModel)
+        public ActionResult EditStatus([Bind(Include = "ID,CustomerID,Price,PickUpStatus")] PickUpModel pickUpModel)
         {
             if (ModelState.IsValid)
             {
@@ -201,21 +202,13 @@ namespace TrashCollector.Controllers
                 db.SaveChanges();
                 return RedirectToAction("CreateSchedule");
             }
-            return RedirectToAction("CreateSchedule");
+            return View(pickUpModel);
         }
         
         public ActionResult WorkSchedule()
         {
             var customers = db.Customers.Include(c => c.ExtraDay).Include(c => c.TrashDay).Include(c => c.Zipcode);
             return View(customers.ToList());
-        }
-
-        public ActionResult Map(int? id)
-        {
-            //var customer = db.Customers.Where(n => n.ID == id).FirstOrDefault();
-            //var normalAddress = customer.Address;
-
-            return View();
         }
     }
 }

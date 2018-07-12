@@ -204,9 +204,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807102210516_initial.cs" />
-    <Compile Include="Migrations\201807102210516_initial.Designer.cs">
-      <DependentUpon>201807102210516_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201807100238149_initial.cs" />
+    <Compile Include="Migrations\201807100238149_initial.Designer.cs">
+      <DependentUpon>201807100238149_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807100246350_adding pickup table.cs" />
+    <Compile Include="Migrations\201807100246350_adding pickup table.Designer.cs">
+      <DependentUpon>201807100246350_adding pickup table.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -232,6 +236,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Garbage-Man-1.jpg" />
+    <Content Include="Images\Garbage-Man-2.jpg" />
+    <Content Include="Images\Garbage-Man-3.jpg" />
+    <Content Include="Images\Garbage-Man-4.png" />
     <Content Include="Images\Garbage-Man-5.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -305,7 +313,6 @@
     <Content Include="Views\Customers\EditSchedule.cshtml" />
     <Content Include="Views\Customers\Balance.cshtml" />
     <Content Include="Views\Employees\EditStatus.cshtml" />
-    <Content Include="Views\Employees\Map.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -324,8 +331,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807102210516_initial.resx">
-      <DependentUpon>201807102210516_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807100238149_initial.resx">
+      <DependentUpon>201807100238149_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807100246350_adding pickup table.resx">
+      <DependentUpon>201807100246350_adding pickup table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

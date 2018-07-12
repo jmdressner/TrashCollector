@@ -18,11 +18,8 @@ namespace TrashCollector.Models
 
         public int Price { get; set; }
 
-        [Display(Name = "Pickup Status")]
         public bool PickUpStatus { get; set; }
-
-        [Display(Name = "Extra Pickup Status")]
-        public bool ExtraPickUpStatus { get; set; }
-
+        
+        
     }
 }

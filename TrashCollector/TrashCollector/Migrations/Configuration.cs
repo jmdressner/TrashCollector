@@ -63,16 +63,16 @@ namespace TrashCollector.Migrations
 
             context.PickUpModels.AddOrUpdate(
                 p => p.CustomerID,
-                    new PickUpModel { CustomerID = 1, Price = 10, PickUpStatus = false, ExtraPickUpStatus = false },
-                    new PickUpModel { CustomerID = 2, Price = 10, PickUpStatus = false, ExtraPickUpStatus = false },
-                    new PickUpModel { CustomerID = 3, Price = 10, PickUpStatus = false, ExtraPickUpStatus = false },
-                    new PickUpModel { CustomerID = 4, Price = 10, PickUpStatus = false, ExtraPickUpStatus = false },
-                    new PickUpModel { CustomerID = 5, Price = 10, PickUpStatus = false, ExtraPickUpStatus = false },
-                    new PickUpModel { CustomerID = 6, Price = 10, PickUpStatus = false, ExtraPickUpStatus = false },
-                    new PickUpModel { CustomerID = 7, Price = 10, PickUpStatus = false, ExtraPickUpStatus = false },
-                    new PickUpModel { CustomerID = 8, Price = 10, PickUpStatus = false, ExtraPickUpStatus = false },
-                    new PickUpModel { CustomerID = 9, Price = 10, PickUpStatus = false, ExtraPickUpStatus = false },
-                    new PickUpModel { CustomerID = 10, Price = 10, PickUpStatus = false, ExtraPickUpStatus = false }
+                    new PickUpModel { CustomerID = 1, Price = 10, PickUpStatus = false},
+                    new PickUpModel { CustomerID = 2, Price = 10, PickUpStatus = false },
+                    new PickUpModel { CustomerID = 3, Price = 10, PickUpStatus = false },
+                    new PickUpModel { CustomerID = 4, Price = 10, PickUpStatus = false },
+                    new PickUpModel { CustomerID = 5, Price = 10, PickUpStatus = false },
+                    new PickUpModel { CustomerID = 6, Price = 10, PickUpStatus = false },
+                    new PickUpModel { CustomerID = 7, Price = 10, PickUpStatus = false },
+                    new PickUpModel { CustomerID = 8, Price = 10, PickUpStatus = false },
+                    new PickUpModel { CustomerID = 9, Price = 10, PickUpStatus = false },
+                    new PickUpModel { CustomerID = 10, Price = 10, PickUpStatus = false }
                 );
             context.SaveChanges();
         }

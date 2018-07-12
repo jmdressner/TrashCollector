@@ -134,20 +134,6 @@ namespace TrashCollector.Migrations
                 .Index(t => t.ApplicationUserID);
             
             CreateTable(
-                "dbo.PickUpModels",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        CustomerID = c.Int(nullable: false),
-                        Price = c.Int(nullable: false),
-                        PickUpStatus = c.Boolean(nullable: false),
-                        ExtraPickUpStatus = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Customers", t => t.CustomerID, cascadeDelete: true)
-                .Index(t => t.CustomerID);
-            
-            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -163,7 +149,6 @@ namespace TrashCollector.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.PickUpModels", "CustomerID", "dbo.Customers");
             DropForeignKey("dbo.Employees", "ZipcodeID", "dbo.Zipcodes");
             DropForeignKey("dbo.Employees", "ApplicationUserID", "dbo.AspNetUsers");
             DropForeignKey("dbo.Customers", "ZipcodeID", "dbo.Zipcodes");
@@ -174,7 +159,6 @@ namespace TrashCollector.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.PickUpModels", new[] { "CustomerID" });
             DropIndex("dbo.Employees", new[] { "ApplicationUserID" });
             DropIndex("dbo.Employees", new[] { "ZipcodeID" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
@@ -187,7 +171,6 @@ namespace TrashCollector.Migrations
             DropIndex("dbo.Customers", new[] { "TrashDayID" });
             DropIndex("dbo.Customers", new[] { "ZipcodeID" });
             DropTable("dbo.AspNetRoles");
-            DropTable("dbo.PickUpModels");
             DropTable("dbo.Employees");
             DropTable("dbo.Zipcodes");
             DropTable("dbo.TrashDays");

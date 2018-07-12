@@ -16,7 +16,6 @@ namespace TrashCollector.Models
         public string Address { get; set; }
 
         [ForeignKey("Zipcode")]
-        [Display(Name = "Zipcode")]
         public int ZipcodeID { get; set; }
         public Zipcode Zipcode { get; set; }
 
