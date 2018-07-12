@@ -11,10 +11,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ExtraDay.extra)
+            @Html.DisplayNameFor(model => model.TrashDay.Day)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TrashDay.Day)
+            @Html.DisplayNameFor(model => model.ExtraDay.extra)
         </th>
     </tr>
 
@@ -22,10 +22,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ExtraDay.extra)
+                @Html.DisplayFor(modelItem => item.TrashDay.Day)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TrashDay.Day)
+                @Html.DisplayFor(modelItem => item.ExtraDay.extra)
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditSchedule", new { id = item.ID }) |
