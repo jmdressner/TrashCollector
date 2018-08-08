@@ -10,6 +10,8 @@ namespace TrashCollector.Models
     {
         [Key]
         public int ID { get; set; }
+
+        [Display(Name = "Trash Day")]
         public string Day { get; set; }
     }
 }

@@ -4,11 +4,9 @@
     ViewBag.Title = "WorkSchedule";
 }
 
-<h2>WorkSchedule</h2>
+<h2>Work Schedule</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<br />
 <table class="table">
     <tr>
         <th>
@@ -25,6 +23,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PickUpStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExtraPickUpStatus)
         </th>
         <th></th>
     </tr>
@@ -47,7 +48,13 @@
             @Html.DisplayFor(modelItem => item.PickUpStatus)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.ExtraPickUpStatus)
+        </td>
+        <td>
             @Html.ActionLink("Edit", "EditStatus", new { id = item.ID }) |
+        </td>
+        <td>
+            @Html.ActionLink("Map", "Map1", new { id = item.Customer.ID }) |
         </td>
     </tr>
 }

@@ -10,6 +10,8 @@ namespace TrashCollector.Models
     {
         [Key]
         public int ID { get; set; }
+
+        [Display(Name = "Zipcode")]
         public string Zip { get; set; }
     }
 }

@@ -63,7 +63,7 @@ namespace TrashCollector.Migrations
 
             context.PickUpModels.AddOrUpdate(
                 p => p.CustomerID,
-                    new PickUpModel { CustomerID = 1, Price = 10, PickUpStatus = false},
+                    new PickUpModel { CustomerID = 1, Price = 10, PickUpStatus = false },
                     new PickUpModel { CustomerID = 2, Price = 10, PickUpStatus = false },
                     new PickUpModel { CustomerID = 3, Price = 10, PickUpStatus = false },
                     new PickUpModel { CustomerID = 4, Price = 10, PickUpStatus = false },
