@@ -219,6 +219,8 @@ namespace TrashCollector.Controllers
             //var customer = db.Customers.Where(n => n.ID == id).FirstOrDefault();
             //var normalAddress = customer.Address;
 
+            ViewBag.Key = Keys.GOOGLE_MAP_KEY;
+
             return View();
         }
 
